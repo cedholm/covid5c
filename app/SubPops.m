@@ -1,26 +1,26 @@
 classdef SubPops
-    
+
     properties
-        totalSusPo
+        totalSusPop
         totalExpPop
         totalInfPop
         totalRecPop
         totalMedPop
         totalDeadPop
         totalHeldPop
-    
+
         susAdminTeach
-        expAdminTeach 
+        expAdminTeach
         infAdminTeach
         recAdminTeach
         medAdminTeach
         deadAdminTeach
         held_sAdminTeach
         held_eAdminTeach
-        heldAdminTeach         
-        
+        heldAdminTeach
+
         susStaff
-        expStaff 
+        expStaff
         infStaff
         recStaff
         medStaff
@@ -28,21 +28,22 @@ classdef SubPops
         held_sStaff
         held_eStaff
         heldStaff
-        
-        susStudents
-        expStudents 
-        infStudents
-        recStudents
-        medStudents
-        deadStudents
-        held_sStudents
-        held_eStudents
-        heldStudents
+
+        susStud
+        expStud
+        infStud
+        recStud
+        medStud
+        deadStud
+        held_sStud
+        held_eStud
+        held_iStud
+        heldStud
     end
-    
+
     methods
         function res = SubPops(y)
-            
+
             % Sums
             res.totalSusPop = 0;
             res.totalExpPop = 0;
@@ -51,7 +52,7 @@ classdef SubPops
             res.totalMedPop = 0;
             res.totalDeadPop = 0;
             res.totalHeldPop = 0;
-            
+
             % Admin/Teaching
             n = 0; % categories 1 - 4
             res.susAdminTeach = y(:,8*n+1) + y(:,8*(n+1)+1) + y(:,8*(n+2)+1) + y(:,8*(n+3)+1);
@@ -63,8 +64,8 @@ classdef SubPops
             res.held_sAdminTeach = y(:,8*n+7) + y(:,8*(n+1)+7) + y(:,8*(n+2)+7) + y(:,8*(n+3)+7);
             res.held_eAdminTeach = y(:,8*n+8) + y(:,8*(n+1)+8) + y(:,8*(n+2)+8) + y(:,8*(n+3)+8);
             res.heldAdminTeach = res.held_sAdminTeach + res.held_eAdminTeach;
-            
-            
+
+
             % Staff
             n = 4; % categories 5 - 8
             res.susStaff = y(:,8*n+1) + y(:,8*(n+1)+1) + y(:,8*(n+2)+1) + y(:,8*(n+3)+1);
@@ -76,8 +77,8 @@ classdef SubPops
             res.held_sStaff = y(:,8*n+7) + y(:,8*(n+1)+7) + y(:,8*(n+2)+7) + y(:,8*(n+3)+7);
             res.held_eStaff = y(:,8*n+8) + y(:,8*(n+1)+8) + y(:,8*(n+2)+8) + y(:,8*(n+3)+8);
             res.heldStaff = res.held_sStaff + res.held_eStaff;
-            
-            
+
+
             % Students
             n = 8; % categories 9 and 10
             res.susStud = y(:,8*n+1) + y(:,8*(n+1)+1);
@@ -88,11 +89,11 @@ classdef SubPops
             res.deadStud = y(:,8*n+6) + y(:,8*(n+1)+6);
             res.held_sStud = y(:,8*n+7) + y(:,8*(n+1)+7);
             res.held_eStud = y(:,8*n+8) + y(:,8*(n+1)+8);
-            
+
             % Non-compliant Students
             res.held_iStud = y(:,end);
             res.heldStud = res.held_sStud + res.held_eStud + res.held_iStud;
-            
+
             for i = 1:80
                 if mod(i,8) == 1
                     res.totalSusPop = res.totalSusPop + y(:, i);
@@ -117,7 +118,14 @@ classdef SubPops
                 end
             end
             res.totalHeldPop = res.totalHeldPop + y(:,end);  % add H_I for NC Students
-            
-        end
-    end
-end
+
+        end % constructor
+
+
+        function extract(obj, label)
+            switch(label)
+                case ''
+            end
+        end % extract
+    end % methods
+end % class
